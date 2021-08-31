@@ -203,6 +203,7 @@ for page_layout in extract_pages(in_file):
             if isinstance(element, LTTextContainer):
                 if element.get_text() == "Account #:\n":
                     client_id_y = element.y1
+                    print("found y coordinate at " + str(element.y1))
                     
 
     
