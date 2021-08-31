@@ -200,7 +200,9 @@ for page_layout in extract_pages(in_file):
                     else:
                         insurance_coord_found_2 = True
                         id_coord_y_2 = element.y1
-                        
+            if isinstance(element, LTTextContainer):
+                if element.get_text() == "Account #:\n":
+                    client_id_y = element.y1
                     
 
     
