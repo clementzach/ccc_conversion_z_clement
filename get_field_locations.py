@@ -21,7 +21,7 @@ for page_layout in extract_pages(in_file):
     #print(dir(page_layout))
     #print(help(page_layout.set_bbox))
     #print(page_layout.x0)
-    if num_pages > 20: ## only do the first few while testing
+    if num_pages > 10: ## only do the first few while testing
         break
     for element in page_layout:
         element_list.append(element) #for using dir()
