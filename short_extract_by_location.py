@@ -125,8 +125,6 @@ current_record_num = 0
 
 for page_layout in extract_pages(in_file):
 
-    if current_record_num > 10:
-            break
 
     if current_record_num % 100 == 0:
             print('now reading record ' + str(current_record_num + 1))
@@ -203,7 +201,7 @@ for page_layout in extract_pages(in_file):
             if isinstance(element, LTTextContainer):
                 if element.get_text() == "Account #:\n":
                     client_id_y = element.y1
-                    print("found y coordinate at " + str(element.y1))
+#                    print("found y coordinate at " + str(element.y1))
                     
 
     
