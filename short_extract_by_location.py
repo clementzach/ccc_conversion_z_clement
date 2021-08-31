@@ -55,9 +55,9 @@ policy_x = 263.400009
 
 client_name_y = 686.851548225
 
-client_id_x = -100
+client_id_x = 301.55999
 
-client_id_y = -100
+client_id_y = 473.97153
 
 phone_offset = 29.28000675000004
 
