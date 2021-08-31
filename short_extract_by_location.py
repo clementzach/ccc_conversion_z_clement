@@ -212,12 +212,11 @@ for page_layout in extract_pages(in_file):
     while first_loop: ## this while loop does nothing but I didn't want to remove the indent on all of the ones below
         for element in page_layout:
             if isinstance(element, LTTextContainer):
+
+                if is_close(element, client_id_x, client_id_y):
+                    current_client_id_num = element.get_text()
+
                 if insurance_coord_found:
-
-                    if is_close(element, client_id_x, client_id_y):
-                        current_client_id_num = element.get_text()
-
-
 
                     if is_close(element, id_phone_x, id_coord_y_1):
                         current_insurance_id_1 = element.get_text()
