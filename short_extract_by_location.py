@@ -57,7 +57,7 @@ client_name_y = 686.851548225
 
 client_id_x = 301.55999
 
-client_id_y = 473.97153
+client_id_y = 473.851536
 
 phone_offset = 29.28000675000004
 
