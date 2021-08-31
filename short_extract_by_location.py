@@ -210,6 +210,12 @@ for page_layout in extract_pages(in_file):
         for element in page_layout:
             if isinstance(element, LTTextContainer):
                 if insurance_coord_found:
+
+                    if is_close(element, client_id_x, client_id_y):
+                        current_client_id_num = element.get_text()
+
+
+
                     if is_close(element, id_phone_x, id_coord_y_1):
                         current_insurance_id_1 = element.get_text()
                         
@@ -296,8 +302,7 @@ for page_layout in extract_pages(in_file):
                         
                     
                         
-                elif is_close(element, client_id_x, client_id_y):
-                    current_client_id_num = element.get_text()[4:]
+
 
                 elif is_close(element, sex_x, sex_y):
                     current_sex = element.get_text()[5:]
