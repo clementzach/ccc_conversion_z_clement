@@ -4,15 +4,24 @@ import os
 import datetime
 import arrow
 
-def get_name(input_string):
+## gets first word in the field
+def get_f_name(input_string):
+  str_vector = input_string.split()
+  if len(str_vector) >= 1:
+    return(str_vector[0])
+  else:
+    return(input_string)
+  
+## gets second word in a field
+def get_l_name(input_string):
   str_vector = input_string.split()
   if len(str_vector) > 1:
-    return(str_vector[0] + " " + str_vector[1])
+    return(str_vector[1])
   else:
     return(input_string)
 
 
-
+#checks if a string has 2-3 uppercase letters
 def is_valid_account(input_string):
   is_valid = True
   if len(input_string) > 3:
@@ -25,6 +34,7 @@ def is_valid_account(input_string):
   			is_valid = False
   return(is_valid)
 
+#splits a string into smaller strings to check if it has an account number
 def get_account_num(input_string):
   words_vector = input_string.split()
   if is_valid_account(words_vector[-1]):
@@ -46,6 +56,8 @@ def get_account_num(input_string):
       print("choosing " + possibles_list[1])
       return(possibles_list[1])
 
+#Changes time zones so that if things are outside of daylight savings time, they will be switched.
+#Basically, this just gets dates so they match what google calendar says. 
 def change_time_zone(input_date):
   end_daylight = arrow.get('2021-11-07T02:00:58.970460-06:00')
   start_daylight = arrow.get('2022-03-13T02:00:58.970460-06:00')
@@ -86,13 +98,16 @@ in_file_list = []
 for file in files_in_folder:
         if file[-3:] == 'ics' and file[0] != '.':
                 in_file_list.append(file)
-
+                
 
 
 
 out_df_list = []
 sheet_names = []
 for in_file in in_file_list:
+  print("reading " + in_file)
+  
+  therapist_name = in_file[0:in_file.find('_')]
 
   with open(in_file, 'r') as file:
     ics_text = file.read()
@@ -177,17 +192,35 @@ for in_file in in_file_list:
   
   out_df = out_df.drop(["created at", "last modified"], axis = 1)
   
+  
+  out_df['Fname'] = out_df.event_name.apply(get_f_name)
+  out_df['Lname'] = out_df.event_name.apply(get_l_name)
+
+  out_df['MRN'] = out_df.event_name.apply(get_account_num)
+  out_df['Visit Date'] = out_df.begin.apply(lambda x: x.date())
+  out_df['Visit Time'] = out_df.begin.apply(lambda x: x.time())
+  out_df['AppDuration'] = out_df.end - out_df.begin
+  out_df['Appointment Comments'] = out_df.event_name
+  out_df['Resource Name'] = therapist_name
 
   
-  out_df['client_name'] = out_df.event_name.apply(get_name)
-
-  out_df['account_num'] = out_df.event_name.apply(get_account_num)
-  out_df_list.append(out_df)
+  
+  
+  dropped_df = out_df[['MRN', 'Lname', 'Fname', 'Resource Name', 'Visit Date', 'Visit Time', 'AppDuration', 'Appointment Comments']]
+  
+  
+  
+  
+  
+  out_df_list.append(dropped_df)
+  
   sheet_names.append(in_file[:-5])
   
   
 
-writer = pd.ExcelWriter('calendar_created_' + str(datetime.datetime.now().date()) + '.xlsx')  
+writer = pd.ExcelWriter('many_sheets_created_' + str(datetime.datetime.now().date()) + '.xlsx')  
+
+
 
 for i in range(len(out_df_list)):
   df = out_df_list[i]
@@ -197,7 +230,23 @@ writer.save()
 
 
 
+full_df = out_df_list[0]
 
-## TODO: does this work if appointments are scheduled in daylight savings time?
+
+for i in range(1, len(out_df_list)):
+
+
+  full_df = pd.concat([full_df, out_df_list[i]], ignore_index = True)
+  
+
+
+
+full_df.to_excel("one_sheet_created" + str(datetime.datetime.now().date()) + '.xlsx')
+
+
+
+
+
+
   
   
