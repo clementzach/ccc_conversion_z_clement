@@ -62,8 +62,8 @@ def get_account_num(input_string):
         for word in possibles_list:
           print_string = print_string + word + " "
         print(print_string)
-        print("choosing " + possibles_list[1])
-        return(possibles_list[1])
+        print("choosing " + possibles_list[0])
+        return(possibles_list[0])
   except:
     return('')
 
