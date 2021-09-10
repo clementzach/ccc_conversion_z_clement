@@ -241,7 +241,7 @@ for i in range(1, len(out_df_list)):
 
 
 
-full_df.to_excel("one_sheet_created" + str(datetime.datetime.now().date()) + '.xlsx')
+full_df.to_excel("one_sheet_created" + str(datetime.datetime.now().date()) + '.xlsx', index = False)
 
 
 
