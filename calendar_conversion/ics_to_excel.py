@@ -83,25 +83,6 @@ def change_time_zone(input_date):
     return(input_date.to('UTC-06').replace(tzinfo = 'UTC').datetime)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ##find file in current directory with an ics 
 files_in_folder = os.listdir('.')
 
@@ -158,8 +139,8 @@ for in_file in in_file_list:
     dur.append(e.duration)
     # uid.append(e.uid)
     desc.append(e.description)
-    created.append(e.created)
-    last_mod.append(e.last_modified)
+    #created.append(e.created)
+    #last_mod.append(e.last_modified)
     # loc.append(e.location)
     # url.append(e.url)
     # transp.append(e.transparent)
@@ -179,8 +160,8 @@ for in_file in in_file_list:
   "duration":dur,
   # "uid":uid,
   # "description":desc,
-   "created at":created,
-   "last modified": last_mod,
+  # "created at":created,
+  # "last modified": last_mod,
   # "location": loc,
   # "url":url,
   # "transparent":transp,
@@ -204,7 +185,7 @@ for in_file in in_file_list:
   out_df.end = pd.to_datetime(out_df.end).dt.tz_localize(None)
   
   
-  out_df = out_df.drop(["created at", "last modified"], axis = 1)
+  #out_df = out_df.drop(["created at", "last modified"], axis = 1)
   
   
   out_df['Fname'] = out_df.event_name.apply(get_f_name)
@@ -218,7 +199,7 @@ for in_file in in_file_list:
   out_df['Resource Name'] = therapist_name
 
   
-  
+  out_df = out_df.loc[out_df['begin'] > datetime.datetime.now()]
   
   dropped_df = out_df[['MRN', 'Lname', 'Fname', 'Resource Name', 'Visit Date', 'Visit Time', 'AppDuration', 'Appointment Comments']]
   
