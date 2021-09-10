@@ -159,7 +159,7 @@ for in_file in in_file_list:
     # uid.append(e.uid)
     desc.append(e.description)
     created.append(e.created)
-    # last_mod.append(e.last_modified)
+    last_mod.append(e.last_modified)
     # loc.append(e.location)
     # url.append(e.url)
     # transp.append(e.transparent)
@@ -179,8 +179,8 @@ for in_file in in_file_list:
   "duration":dur,
   # "uid":uid,
   # "description":desc,
-  # "created at":created,
-  # "last modified": last_mod,
+   "created at":created,
+   "last modified": last_mod,
   # "location": loc,
   # "url":url,
   # "transparent":transp,
