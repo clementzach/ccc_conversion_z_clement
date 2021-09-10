@@ -6,55 +6,66 @@ import arrow
 
 ## gets first word in the field
 def get_f_name(input_string):
-  str_vector = input_string.split()
-  if len(str_vector) >= 1:
-    return(str_vector[0])
-  else:
-    return(input_string)
+  try:
+    str_vector = input_string.split()
+    if len(str_vector) >= 1:
+      return(str_vector[0])
+    else:
+      return(input_string)
+  except:
+    return('')
   
 ## gets second word in a field
 def get_l_name(input_string):
-  str_vector = input_string.split()
-  if len(str_vector) > 1:
-    return(str_vector[1])
-  else:
-    return(input_string)
-
+  try:
+    str_vector = input_string.split()
+    if len(str_vector) > 1:
+      return(str_vector[1])
+    else:
+      return(input_string)
+  except:
+    return('')
 
 #checks if a string has 2-3 uppercase letters
 def is_valid_account(input_string):
-  is_valid = True
-  if len(input_string) > 3:
-  	is_valid = False
-  elif len(input_string) == 1:
-  	is_valid = False
-  else:
-  	for i in range(len(input_string)):
-  		if not input_string[i].isupper():
-  			is_valid = False
-  return(is_valid)
+  try:
+    is_valid = True
+    if len(input_string) > 3:
+    	is_valid = False
+    elif len(input_string) == 1:
+    	is_valid = False
+    else:
+    	for i in range(len(input_string)):
+    		if not input_string[i].isupper():
+    			is_valid = False
+    return(is_valid)
+  except:
+    return('')
 
 #splits a string into smaller strings to check if it has an account number
 def get_account_num(input_string):
-  words_vector = input_string.split()
-  if is_valid_account(words_vector[-1]):
-  	return(words_vector[-1])
-  else:
-    possibles_list = []
-    for word in words_vector:
-      if is_valid_account(word):
-        possibles_list.append(word)
-    if len(possibles_list) == 1:
-      return(possibles_list[0])
-    elif len(possibles_list) == 0:
-      return('')
+  try:
+    words_vector = input_string.split()
+    if is_valid_account(words_vector[-1]):
+    	return(words_vector[-1])
     else:
-      print_string = "could not decide between "
-      for word in possibles_list:
-        print_string = print_string + word + " "
-      print(print_string)
-      print("choosing " + possibles_list[1])
-      return(possibles_list[1])
+      possibles_list = []
+      for word in words_vector:
+        if is_valid_account(word):
+          possibles_list.append(word)
+      if len(possibles_list) == 1:
+        return(possibles_list[0])
+      elif len(possibles_list) == 0:
+        return('')
+      else:
+        print_string = "could not decide between "
+        for word in possibles_list:
+          print_string = print_string + word + " "
+        print(print_string)
+        print("choosing " + possibles_list[1])
+        return(possibles_list[1])
+  except:
+    return('')
 
 #Changes time zones so that if things are outside of daylight savings time, they will be switched.
 #Basically, this just gets dates so they match what google calendar says. 
