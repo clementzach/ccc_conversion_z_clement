@@ -155,19 +155,19 @@ for in_file in in_file_list:
     begin.append(e.begin)
     end.append(e.end)
     dur.append(e.duration)
-    uid.append(e.uid)
+    # uid.append(e.uid)
     desc.append(e.description)
     created.append(e.created)
-    last_mod.append(e.last_modified)
-    loc.append(e.location)
-    url.append(e.url)
-    transp.append(e.transparent)
-    alarms.append(e.alarms)
-    attend.append(e.attendees)
-    cat.append(e.categories)
-    stat.append(e.status)
-    org.append(e.organizer)
-    classify.append(e.classification)
+    # last_mod.append(e.last_modified)
+    # loc.append(e.location)
+    # url.append(e.url)
+    # transp.append(e.transparent)
+    # alarms.append(e.alarms)
+    # attend.append(e.attendees)
+    # cat.append(e.categories)
+    # stat.append(e.status)
+    # org.append(e.organizer)
+    # classify.append(e.classification)
     
   
   
@@ -176,20 +176,22 @@ for in_file in in_file_list:
   "begin":begin,
   "end":end,
   "duration":dur,
-  "uid":uid,
-  "description":desc,
-  "created at":created,
-  "last modified": last_mod,
-  "location": loc,
-  "url":url,
-  "transparent":transp,
-  "alarms":alarms,
-  "attendees":attend,
-  "categories":cat,
-  "status":stat,
-  "organizer":org,
-  "classification":classify})
+  # "uid":uid,
+  # "description":desc,
+  # "created at":created,
+  # "last modified": last_mod,
+  # "location": loc,
+  # "url":url,
+  # "transparent":transp,
+  # "alarms":alarms,
+  # "attendees":attend,
+  # "categories":cat,
+  # "status":stat,
+  # "organizer":org,
+  # "classification":classify})
+  })
   
+  out_df.event_name =  out_df.event_name.apply(lambda x: re.sub('-',' ',x))
   
   out_df.begin = out_df.begin.apply(change_time_zone)
   out_df.end = out_df.end.apply(change_time_zone)
