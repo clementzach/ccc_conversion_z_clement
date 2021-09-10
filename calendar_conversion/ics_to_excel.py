@@ -3,6 +3,7 @@ from ics import Calendar, Event
 import os
 import datetime
 import arrow
+import re
 
 ## gets first word in the field
 def get_f_name(input_string):
