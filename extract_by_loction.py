@@ -91,6 +91,8 @@ billable_2_phone = []
 billable_3_phone = []
 billable_4_phone = []
 
+
+
 account_num = []
 
 insurance_policy_1 = []
@@ -107,16 +109,63 @@ notes = []
 
 client_id_num = []
 
+
+
+billable_1_f_name = []
+billable_2_f_name = []
+billable_3_f_name = []
+billable_4_f_name = []
+
+billable_1_l_name = []
+billable_2_l_name = []
+billable_3_l_name = []
+billable_4_l_name = []
+
+billable_1_street = []
+billable_2_street = []
+billable_3_street = []
+billable_4_street = []
+
+billable_1_city = []
+billable_2_city = []
+billable_3_city = []
+billable_4_city = []
+
+billable_1_state = []
+billable_2_state = []
+billable_3_state = []
+billable_4_state = []
+
+billable_1_zip = []
+billable_2_zip = []
+billable_3_zip = []
+billable_4_zip = []
+
+insurance_1_name = []
+insurance_2_name = []
+
+insurance_1_street = []
+insurance_2_street = []
+
+insurance_1_city = []
+insurance_2_city = []
+
+insurance_1_state = []
+insurance_2_state = []
+
+insurance_1_zip = []
+insurance_2_zip = []
+
 num_pages = 1
 
 
-def is_close(my_element, x_coord, y_coord):
+def is_close(my_element, x_coord, y_coord): ## lets us check if an element is near the coordinates
     if abs(my_element.x0 - x_coord) < 2 and abs(my_element.y1 - y_coord) < 2: # within 2 from the coordinate
         return True
     else:
         return False
 
-def single_close(num_1, num_2):
+def single_close(num_1, num_2): #if we already know x or y is close enough
     if abs(num_1- num_2) < 2: # within 2 from the coordinate
         return True
     else:
@@ -164,7 +213,6 @@ for page_layout in extract_pages(in_file):
     current_client_id_num = ''
 
 
-
     current_insurance_address_1 = ''
     current_insurance_policy_1 = ''
     current_insurance_id_1 = ''
@@ -177,6 +225,51 @@ for page_layout in extract_pages(in_file):
 
     current_notes = ''
     
+    current_billable_1_f_name = ''
+    current_billable_2_f_name = ''
+    current_billable_3_f_name = ''
+    current_billable_4_f_name = ''
+    
+    current_billable_1_l_name = ''
+    current_billable_2_l_name = ''
+    current_billable_3_l_name = ''
+    current_billable_4_l_name = ''
+    
+    current_billable_1_street = ''
+    current_billable_2_street = ''
+    current_billable_3_street = ''
+    current_billable_4_street = ''
+    
+    current_billable_1_city = ''
+    current_billable_2_city = ''
+    current_billable_3_city = ''
+    current_billable_4_city = ''
+    
+    current_billable_1_state = ''
+    current_billable_2_state = ''
+    current_billable_3_state = ''
+    current_billable_4_state = ''
+    
+    current_billable_1_zip = ''
+    current_billable_2_zip = ''
+    current_billable_3_zip = ''
+    current_billable_4_zip = ''
+    
+    current_insurance_1_name = ''
+    current_insurance_2_name = ''
+    
+    current_insurance_1_street = ''
+    current_insurance_2_street = ''
+    
+    current_insurance_1_city = ''
+    current_insurance_2_city = ''
+    
+    current_insurance_1_state = ''
+    current_insurance_2_state = ''
+    
+    current_insurance_1_zip = ''
+    current_insurance_2_zip = ''
+    
     
     
     insurance_coord_found = False
@@ -188,7 +281,7 @@ for page_layout in extract_pages(in_file):
     #num_pages +=1
 
     for element in page_layout:
-            if isinstance(element, LTTextContainer):
+            if isinstance(element, LTTextContainer): ## the insurance field will have an ID # box near it
                 if element.get_text() == "ID #:\n":
                     if id_coord_y_1 == 0.0:
                         insurance_coord_found = True
@@ -214,14 +307,23 @@ for page_layout in extract_pages(in_file):
                 if is_close(element, client_id_x, client_id_y):
                     current_client_id_num = element.get_text()
 
-                if insurance_coord_found:
+                if insurance_coord_found: #limits to just pages with people's entries on them. 
 
                     if is_close(element, id_phone_x, id_coord_y_1):
                         current_insurance_id_1 = element.get_text()
                         
                     elif is_close(element, address_x, id_coord_y_1 + 2.160003):
-                        current_insurance_address_1 = element.get_text()
-                        #insurance_written = True
+                        current_insurance_address_1 = element.get_text() 
+                        current_insurance_1_name = current_insurance_address_1.split('\n')[0]
+                        current_insurance_1_street = current_insurance_address_1.split('\n')[1]
+                        try:
+                            current_insurance_1_city = current_insurance_address_1.split('\n')[2].split(',')[0]
+                            current_insurance_1_state = current_insurance_address_1.split('\n')[2].split(',')[1][1:3]
+                            current_insurance_1_zip = current_insurance_address_1.split('\n')[2].split(',')[1].split()[1]
+                        except:
+                            junk_var = 1
+                        
+                        
                         
                     elif is_close(element, policy_x, id_coord_y_1 - 13.5600135):
                         current_insurance_policy_1 = element.get_text()[10:]
@@ -236,7 +338,16 @@ for page_layout in extract_pages(in_file):
                         
                         elif is_close(element, address_x, id_coord_y_2 + 2.160003):
                             current_insurance_address_2 = element.get_text()
-                            #insurance_written = True
+                            current_insurance_2_name = current_insurance_address_2.split('\n')[0]
+                            
+                            current_insurance_2_street = current_insurance_address_2.split('\n')[1]
+                            try:
+                                current_insurance_2_city = current_insurance_address_2.split('\n')[2].split(',')[0]
+                                current_insurance_2_state = current_insurance_address_2.split('\n')[2].split(',')[1][1:3]
+                                current_insurance_2_zip = current_insurance_address_2.split('\n')[2].split(',')[1].split()[1]
+                            except:
+                                junk_var = 1
+                                
                         
                         elif is_close(element, policy_x, id_coord_y_2 - 13.5600135):
                             current_insurance_policy_2 = element.get_text()[10:]
@@ -249,6 +360,17 @@ for page_layout in extract_pages(in_file):
                 if single_close(element.x0, address_x):
                     if single_close(element.y1, first_billable_y):
                         current_billable_1 = element.get_text()
+                        current_billable_1_name = current_billable_1.split('\n')[0]
+                        current_billable_1_f_name = current_billable_1_name.split()[0]
+                        current_billable_1_l_name = current_billable_1_name.split()[-1]
+                        current_billable_1_street = current_billable_1.split('\n')[1]
+                        try:
+                            current_billable_1_city = current_billable_1.split('\n')[2].split(',')[0]
+                            current_billable_1_state = current_billable_1.split('\n')[2].split(',')[1][1:3]
+                            current_billable_1_zip = current_billable_1.split('\n')[2].split(',')[1].split()[1]
+                        except:
+                            junk_var = 1
+                        
                         
                     elif single_close(element.y1, client_name_y):
                         current_full_address = element.get_text()
@@ -268,12 +390,45 @@ for page_layout in extract_pages(in_file):
                         
                     elif single_close(element.y1, first_billable_y - between_billable_y):
                         current_billable_2 = element.get_text()
+                        current_billable_2_name = current_billable_2.split('\n')[0]
+                        current_billable_2_f_name = current_billable_2_name.split()[0]
+                        current_billable_2_l_name = current_billable_2_name.split()[-1]
+                        current_billable_2_street = current_billable_2.split('\n')[1]
+                        try:
+                            current_billable_2_city = current_billable_2.split('\n')[2].split(',')[0]
+                            current_billable_2_state = current_billable_2.split('\n')[2].split(',')[1][1:3]
+                            current_billable_2_zip = current_billable_2.split('\n')[2].split(',')[1].split()[1]
+                        except:
+                            junk_var = 1
+                        
                         
                     elif single_close(element.y1, first_billable_y - (2 * between_billable_y)):
                         current_billable_3 = element.get_text()
+                        current_billable_3 = element.get_text()
+                        current_billable_3_name = current_billable_3.split('\n')[0]
+                        current_billable_3_f_name = current_billable_3_name.split()[0]
+                        current_billable_3_l_name = current_billable_3_name.split()[-1]
+                        current_billable_3_street = current_billable_3.split('\n')[1]
+                        try:
+                            current_billable_3_city = current_billable_3.split('\n')[2].split(',')[0]
+                            current_billable_3_state = current_billable_3.split('\n')[2].split(',')[1][1:3]
+                            current_billable_3_zip = current_billable_3.split('\n')[2].split(',')[1].split()[1]
+                        except:
+                            junk_var = 1
                         
                     elif single_close(element.y1, first_billable_y - (3 * between_billable_y)):
                         current_billable_4 = element.get_text()
+                        current_billable_4_name = current_billable_4.split('\n')[0]
+                        current_billable_4_f_name = current_billable_4_name.split()[0]
+                        current_billable_4_l_name = current_billable_4_name.split()[-1]
+                        current_billable_4_street = current_billable_4.split('\n')[1]
+                        try:
+                            current_billable_4_city = current_billable_4.split('\n')[2].split(',')[0]
+                            current_billable_4_state = current_billable_4.split('\n')[2].split(',')[1][1:3]
+                            current_billable_4_zip = current_billable_4.split('\n')[2].split(',')[1].split()[1]
+                        except:
+                            junk_var = 1
+                            
                     elif element.y1 < 250:
                         current_notes = current_notes + element.get_text() + '\n'
                         
@@ -320,26 +475,79 @@ for page_layout in extract_pages(in_file):
                         
                         
                         
-                    
-    if current_insurance_address_1 == current_billable_2: #Avoid counting an address as both a insurance and billable party
+    if current_insurance_address_1 == current_billable_1: #Avoid counting an address as both a insurance and billable party
         current_billable_2 = ''
         current_billable_2_phone = ''
+        current_billable_2_f_name = ''
+        current_billable_2_l_name = ''
+        current_billable_2_street = ''
+        current_billable_2_city = ''
+        current_billable_2_state = ''
+        current_billable_2_zip = ''
+        
+    elif current_insurance_address_1 == current_billable_2: #Avoid counting an address as both a insurance and billable party
+        current_billable_2 = ''
+        current_billable_2_phone = ''
+        current_billable_2_f_name = ''
+        current_billable_2_l_name = ''
+        current_billable_2_street = ''
+        current_billable_2_city = ''
+        current_billable_2_state = ''
+        current_billable_2_zip = ''
+        
+        
     elif current_insurance_address_1 == current_billable_3:
         current_billable_3 = ''
         current_billable_3_phone = ''
+        current_billable_3_f_name = ''
+        current_billable_3_l_name = ''
+        current_billable_3_street = ''
+        current_billable_3_city = ''
+        current_billable_3_state = ''
+        current_billable_3_zip = ''
+        
+        
+        
+        
     elif current_insurance_address_1 == current_billable_4:
         current_billable_4 = ''
         current_billable_4_phone = ''
-
+        current_billable_4_f_name = ''
+        current_billable_4_l_name = ''
+        current_billable_4_street = ''
+        current_billable_4_city = ''
+        current_billable_4_state = ''
+        current_billable_4_zip = ''
+        
     if current_insurance_address_2 == current_billable_2: #Avoid counting an address as both a insurance and billable party
         current_billable_2 = ''
         current_billable_2_phone = ''
+        current_billable_2_f_name = ''
+        current_billable_2_l_name = ''
+        current_billable_2_street = ''
+        current_billable_2_city = ''
+        current_billable_2_state = ''
+        current_billable_2_zip = ''
     elif current_insurance_address_2 == current_billable_3:
         current_billable_3 = ''
         current_billable_3_phone = ''
+        current_billable_3_f_name = ''
+        current_billable_3_l_name = ''
+        current_billable_3_street = ''
+        current_billable_3_city = ''
+        current_billable_3_state = ''
+        current_billable_3_zip = ''
     elif current_insurance_address_2 == current_billable_4:
         current_billable_4 = ''
         current_billable_4_phone = ''
+        current_billable_4_f_name = ''
+        current_billable_4_l_name = ''
+        current_billable_4_street = ''
+        current_billable_4_city = ''
+        current_billable_4_state = ''
+        current_billable_4_zip = ''
+            
+        
                     
                     
                         
@@ -389,6 +597,52 @@ for page_layout in extract_pages(in_file):
     zip_code.append(current_zip)
 
     notes.append(current_notes)
+    
+    
+    billable_1_f_name.append(current_billable_1_f_name)
+    billable_2_f_name.append(current_billable_2_f_name)
+    billable_3_f_name.append(current_billable_3_f_name)
+    billable_4_f_name.append(current_billable_4_f_name)
+    
+    billable_1_l_name.append(current_billable_1_l_name)
+    billable_2_l_name.append(current_billable_2_l_name)
+    billable_3_l_name.append(current_billable_3_l_name)
+    billable_4_l_name.append(current_billable_4_l_name)
+    
+    billable_1_street.append(current_billable_1_street)
+    billable_2_street.append(current_billable_2_street)
+    billable_3_street.append(current_billable_3_street)
+    billable_4_street.append(current_billable_4_street)
+    
+    billable_1_city.append(current_billable_1_city)
+    billable_2_city.append(current_billable_2_city)
+    billable_3_city.append(current_billable_3_city)
+    billable_4_city.append(current_billable_4_city)
+    
+    billable_1_state.append(current_billable_1_state)
+    billable_2_state.append(current_billable_2_state)
+    billable_3_state.append(current_billable_3_state)
+    billable_4_state.append(current_billable_4_state)
+    
+    billable_1_zip.append(current_billable_1_zip)
+    billable_2_zip.append(current_billable_2_zip)
+    billable_3_zip.append(current_billable_3_zip)
+    billable_4_zip.append(current_billable_4_zip)
+    
+    insurance_1_name.append(current_insurance_1_name)
+    insurance_2_name.append(current_insurance_2_name)
+    
+    insurance_1_street.append(current_insurance_1_street)
+    insurance_2_street.append(current_insurance_2_street)
+    
+    insurance_1_city.append(current_insurance_1_city)
+    insurance_2_city.append(current_insurance_2_city)
+    
+    insurance_1_state.append(current_insurance_1_state)
+    insurance_2_state.append(current_insurance_2_state)
+    
+    insurance_1_zip.append(current_insurance_1_zip)
+    insurance_2_zip.append(current_insurance_2_zip)
 
     
     
@@ -422,22 +676,61 @@ df = pd.DataFrame(data = {'full name': client_name,
                           'Service' : service,
                           
                           'Billable party 1': billable_1,
+                          'Billable Party 1 First Name' : billable_1_f_name,
+                          'Billable Party 1 Last Name' : billable_1_l_name,
+                          'Billable Party 1 Street' :  billable_1_street,
+                          'Billable Party 1 city' :  billable_1_city,
+                          'Billable Party 1 state' :  billable_1_state,
+                          'Billable Party 1 zip' :  billable_1_zip,
                           'Billable party 1 phone': billable_1_phone,
+                          
                           'Billable party 2': billable_2,
+                          'Billable Party 2 First Name' : billable_2_f_name,
+                          'Billable Party 2 Last Name' : billable_2_l_name,
+                          'Billable Party 2 Street' :  billable_2_street,
+                          'Billable Party 2 city' :  billable_2_city,
+                          'Billable Party 2 state' :  billable_2_state,
+                          'Billable Party 2 zip' :  billable_2_zip,
                           'Billable party 2 phone': billable_2_phone,
+                          
                           'Billable party 3': billable_3,
+                          'Billable Party 3 First Name' : billable_3_f_name,
+                          'Billable Party 3 Last Name' : billable_3_l_name,
+                          'Billable Party 3 Street' :  billable_3_street,
+                          'Billable Party 3 city' :  billable_3_city,
+                          'Billable Party 3 state' :  billable_3_state,
+                          'Billable Party 3 zip' :  billable_3_zip,
                           'Billable party 3 phone': billable_3_phone,
+                          
                           'Billable party 4': billable_4,
+                          'Billable Party 4 First Name' : billable_4_f_name,
+                          'Billable Party 4 Last Name' : billable_4_l_name,
+                          'Billable Party 4 Street' :  billable_4_street,
+                          'Billable Party 4 city' :  billable_4_city,
+                          'Billable Party 4 state' :  billable_4_state,
+                          'Billable Party 4 zip' :  billable_4_zip,
                           'Billable party 4 phone': billable_4_phone,
+                          
+
                           
                           'Account #' : account_num,
                           
                           'Insurance Address 1': insurance_address_1,
+                          'Insurance 1 Name' : insurance_1_name,
+                          'Insurance 1 Street' : insurance_1_street,
+                          'Insurance 1 City' : insurance_1_city,
+                          'Insurance 1 State' : insurance_1_state,
+                          'Insurance 1 Zip' : insurance_1_zip,
                           'Insurance ID 1' : insurance_id_1,
                           'Insurance Policy 1' : insurance_policy_1,
                           'Insurance Phone 1' : insurance_phone_1,
                           
                           'Insurance Address 2': insurance_address_2,
+                          'Insurance 2 Name' : insurance_2_name,
+                          'Insurance 2 Street' : insurance_2_street,
+                          'Insurance 2 City' : insurance_2_city,
+                          'Insurance 2 State' : insurance_2_state,
+                          'Insurance 2 Zip' : insurance_2_zip,
                           'Insurance ID 2' : insurance_id_2,
                           'Insurance Policy 2' : insurance_policy_2,
                           'Insurance Phone 2' : insurance_phone_2,
@@ -445,3 +738,6 @@ df = pd.DataFrame(data = {'full name': client_name,
                           'Notes' : notes})
 
 df.to_csv(path_or_buf = out_file, index = False)
+
+
+

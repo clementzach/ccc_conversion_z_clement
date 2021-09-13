@@ -2,4 +2,4 @@
 *.xlsx
 *.pdf
 *.ical
-
+.DS_Store

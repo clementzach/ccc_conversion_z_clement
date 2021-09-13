@@ -194,7 +194,7 @@ for in_file in in_file_list:
   out_df['MRN'] = out_df.event_name.apply(get_account_num)
   out_df['Visit Date'] = out_df.begin.apply(lambda x: x.date())
   out_df['Visit Time'] = out_df.begin.apply(lambda x: x.time())
-  out_df['AppDuration'] = out_df.end - out_df.begin
+  out_df['AppDuration'] = 60
   out_df['Appointment Comments'] = out_df.event_name
   out_df['Resource Name'] = therapist_name
 
@@ -203,19 +203,11 @@ for in_file in in_file_list:
   
   dropped_df = out_df[['MRN', 'Lname', 'Fname', 'Resource Name', 'Visit Date', 'Visit Time', 'AppDuration', 'Appointment Comments']]
   
-  
-  
-  
-  
   out_df_list.append(dropped_df)
   
-  sheet_names.append(in_file[:-5])
+  sheet_names.append(therapist_name)
   
-  
-
 writer = pd.ExcelWriter('many_sheets_created_' + str(datetime.datetime.now().date()) + '.xlsx')  
-
-
 
 for i in range(len(out_df_list)):
   df = out_df_list[i]
@@ -223,18 +215,11 @@ for i in range(len(out_df_list)):
 
 writer.save()
 
-
-
 full_df = out_df_list[0]
 
-
 for i in range(1, len(out_df_list)):
-
-
   full_df = pd.concat([full_df, out_df_list[i]], ignore_index = True)
   
-
-
 
 full_df.to_excel("one_sheet_created" + str(datetime.datetime.now().date()) + '.xlsx', index = False)
 
