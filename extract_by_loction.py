@@ -476,14 +476,14 @@ for page_layout in extract_pages(in_file):
                         
                         
     if current_insurance_address_1 == current_billable_1: #Avoid counting an address as both a insurance and billable party
-        current_billable_2 = ''
-        current_billable_2_phone = ''
-        current_billable_2_f_name = ''
-        current_billable_2_l_name = ''
-        current_billable_2_street = ''
-        current_billable_2_city = ''
-        current_billable_2_state = ''
-        current_billable_2_zip = ''
+        current_billable_1 = ''
+        current_billable_1_phone = ''
+        current_billable_1_f_name = ''
+        current_billable_1_l_name = ''
+        current_billable_1_street = ''
+        current_billable_1_city = ''
+        current_billable_1_state = ''
+        current_billable_1_zip = ''
         
     elif current_insurance_address_1 == current_billable_2: #Avoid counting an address as both a insurance and billable party
         current_billable_2 = ''
