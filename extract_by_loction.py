@@ -314,12 +314,13 @@ for page_layout in extract_pages(in_file):
                         
                     elif is_close(element, address_x, id_coord_y_1 + 2.160003):
                         current_insurance_address_1 = element.get_text() 
-                        current_insurance_1_name = current_insurance_address_1.split('\n')[0]
-                        current_insurance_1_street = current_insurance_address_1.split('\n')[1]
+                        current_insurance_1_name = current_insurance_address_1[0:current_insurance_address_1.find('P.')]
+                            
+                        current_insurance_1_street = current_insurance_address_1[current_insurance_address_1.find('P.'):]
                         try:
-                            current_insurance_1_city = current_insurance_address_1.split('\n')[2].split(',')[0]
-                            current_insurance_1_state = current_insurance_address_1.split('\n')[2].split(',')[1][1:3]
-                            current_insurance_1_zip = current_insurance_address_1.split('\n')[2].split(',')[1].split()[1]
+                            current_insurance_1_city = current_insurance_address_1.split('\n')[1].split(',')[0]
+                            current_insurance_1_state = current_insurance_address_1.split('\n')[1].split(',')[1][1:3]
+                            current_insurance_1_zip = current_insurance_address_1.split('\n')[1].split(',')[1].split()[1]
                         except:
                             junk_var = 1
                         
@@ -338,13 +339,13 @@ for page_layout in extract_pages(in_file):
                         
                         elif is_close(element, address_x, id_coord_y_2 + 2.160003):
                             current_insurance_address_2 = element.get_text()
-                            current_insurance_2_name = current_insurance_address_2.split('\n')[0]
+                            current_insurance_2_name = current_insurance_address_2[0:current_insurance_address_2.find('P.')]
                             
-                            current_insurance_2_street = current_insurance_address_2.split('\n')[1]
+                            current_insurance_2_street = current_insurance_address_2[current_insurance_address_2.find('P.'):]
                             try:
-                                current_insurance_2_city = current_insurance_address_2.split('\n')[2].split(',')[0]
-                                current_insurance_2_state = current_insurance_address_2.split('\n')[2].split(',')[1][1:3]
-                                current_insurance_2_zip = current_insurance_address_2.split('\n')[2].split(',')[1].split()[1]
+                                current_insurance_2_city = current_insurance_address_2.split('\n')[1].split(',')[0]
+                                current_insurance_2_state = current_insurance_address_2.split('\n')[1].split(',')[1][1:3]
+                                current_insurance_2_zip = current_insurance_address_2.split('\n')[1].split(',')[1].split()[1]
                             except:
                                 junk_var = 1
                                 
